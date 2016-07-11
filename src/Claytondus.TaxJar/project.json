@@ -1,13 +1,38 @@
 ﻿{
-  "version": "1.0.0-*",
+  "title": "Claytondus.TaxJar",
+  "authors": [ "Clayton Davis" ],
+  "copyright": "2016 Clayton Davis and TPS Unlimited, Inc.",
+  "version": "0.1.0",
+  "description": "A C# wrapper for the TaxJar SmartCalcs API.  I AM NOT AFFILIATED WITH TPS UNLIMITED, INC.",
+
+  "packOptions": {
+    "projectUrl": "https://github.com/claytondus/Claytondus.TaxJar",
+    "licenseUrl": "http://opensource.org/licenses/MIT"
+  },
 
   "dependencies": {
-    "NETStandard.Library": "1.6.0"
+    "Flurl.Http": "0.10.1",
+    "Microsoft.CSharp": "4.0.1"
   },
 
   "frameworks": {
-    "netstandard1.6": {
-      "imports": "dnxcore50"
+    "netstandard1.3": {
+      "imports": [ "dnxcore50", "dotnet5.4" ],
+      "dependencies": {
+        "NETStandard.Library": "1.6.0"        
+
+      },
+      "buildOptions": {
+        "define": [ "LIBLOG_PORTABLE" ]
+      }
+    },
+    "net45": {
+      "dependencies": {
+      },
+      "frameworkAssemblies": {
+        "System.Net": "4.0.0.0",
+        "System.Net.Http": "4.0.0.0"
+      }
     }
   }
 }
