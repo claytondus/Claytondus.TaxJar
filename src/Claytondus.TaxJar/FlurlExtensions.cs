@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Flurl;
 using Flurl.Http;
@@ -45,6 +46,33 @@ namespace Claytondus.TaxJar
         public static Task<HttpResponseMessage> PostMultipartAsync(this string url, MultipartFormDataContent content)
         {
             return new FlurlClient(url, true).PostMultipartAsync(content);
+        }
+
+        /// <summary>
+        /// Sends an asynchronous PUT request.
+        /// </summary>
+        /// <param name="client">The Flurl client.</param>
+        /// <param name="data">Contents of the request body.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation. Optional.</param>
+        /// <param name="completionOption">The HttpCompletionOption used in the request. Optional.</param>
+        /// <returns>A Task whose result is the received HttpResponseMessage.</returns>
+        public static Task<HttpResponseMessage> PutUrlEncodedAsync(this FlurlClient client, object data, CancellationToken cancellationToken = default(CancellationToken), HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead)
+        {
+            var content = new CapturedUrlEncodedContent(client.Settings.UrlEncodedSerializer.Serialize(data));
+            return client.SendAsync(HttpMethod.Put, content: content, cancellationToken: cancellationToken, completionOption: completionOption);
+        }
+
+        /// <summary>
+        /// Creates a FlurlClient from the URL and sends an asynchronous PUT request.
+        /// </summary>
+        /// <param name="url">The URL.</param>
+        /// <param name="data">Contents of the request body.</param>
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation. Optional.</param>
+        /// <param name="completionOption">The HttpCompletionOption used in the request. Optional.</param>
+        /// <returns>A Task whose result is the received HttpResponseMessage.</returns>
+        public static Task<HttpResponseMessage> PutUrlEncodedAsync(this Url url, object data, CancellationToken cancellationToken = default(CancellationToken), HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead)
+        {
+            return new FlurlClient(url, false).PutUrlEncodedAsync(data, cancellationToken, completionOption);
         }
     }
 }
