@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -95,11 +96,11 @@ namespace Claytondus.TaxJar
             Log.Trace("PUT " + resource);
             try
 			{
-				var response = await new Url(TaxJarUrl)
+				var request = new Url(TaxJarUrl)
                     .AppendPathSegment(resource)
 					.WithDefaults()
-					.WithOAuthBearerToken(_authToken)
-					.PutUrlEncodedAsync(body)
+					.WithOAuthBearerToken(_authToken);
+				var response = await request.SendUrlEncodedAsync(HttpMethod.Put, body)
 					.ReceiveJson<T>();
 			    return response;
 			}
@@ -168,7 +169,7 @@ namespace Claytondus.TaxJar
 
 	public static class UrlExtension
 	{
-		public static FlurlClient WithDefaults(this Url url)
+		public static IFlurlRequest WithDefaults(this Url url)
 		{
 			return url
 				.WithTimeout(10)
