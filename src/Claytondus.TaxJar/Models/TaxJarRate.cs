@@ -11,6 +11,7 @@ namespace Claytondus.TaxJar.Models
         public string zip { get; set; }
         public string city { get; set; }
         public string street { get; set; }
+        public string state { get; set; }
     }
 
     public class TaxJarUSCARateContainer
@@ -29,6 +30,7 @@ namespace Claytondus.TaxJar.Models
         public decimal? city_rate { get; set; }
         public decimal? combined_district_rate { get; set; }
         public decimal? combined_rate { get; set; }
+        public bool freight_taxable { get; set; }
     }
 
     public class TaxJarIntlRateContainer

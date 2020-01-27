@@ -60,7 +60,7 @@ namespace Claytondus.TaxJar
 			}
 			catch (FlurlHttpException ex)
 			{
-			    var response = ex.Call.ErrorResponseBody;
+			    var response = await ex.Call.Response.Content.ReadAsStringAsync();
                 var TaxJarEx = new TaxJarException("error", response) { Method = "GET", Resource = resource, HttpStatus = ex.Call.HttpStatus};
                 throw TaxJarEx;
             }
@@ -84,7 +84,7 @@ namespace Claytondus.TaxJar
 			}
 			catch (FlurlHttpException ex)
 			{
-                var response = ex.Call.ErrorResponseBody;
+                var response = await ex.Call.Response.Content.ReadAsStringAsync();
                 var TaxJarEx = new TaxJarException("error", response) { Method = "POST", Resource = resource, HttpStatus = ex.Call.HttpStatus, HttpMessage = ex.Message, RequestBody = ex.Call.RequestBody};
                 throw TaxJarEx;
             }
@@ -110,7 +110,7 @@ namespace Claytondus.TaxJar
 			}
 			catch (FlurlHttpException ex)
 			{
-                var response = ex.Call.ErrorResponseBody;
+                var response = await ex.Call.Response.Content.ReadAsStringAsync();
                 var TaxJarEx = new TaxJarException("error", response) { Method = "PUT", Resource = resource, HttpStatus = ex.Call.HttpStatus, HttpMessage = ex.Message, RequestBody = ex.Call.RequestBody };
                 throw TaxJarEx;
             }
@@ -134,7 +134,7 @@ namespace Claytondus.TaxJar
             }
             catch (FlurlHttpException ex)
             {
-                var response = ex.Call.ErrorResponseBody;
+                var response = await ex.Call.Response.Content.ReadAsStringAsync();
                 var TaxJarEx = new TaxJarException("error", response) { Method = "DELETE", Resource = resource, HttpStatus = ex.Call.HttpStatus, HttpMessage = ex.Message };
                 throw TaxJarEx;
             }
@@ -160,7 +160,7 @@ namespace Claytondus.TaxJar
 			}
 			catch (FlurlHttpException ex)
 			{
-                var response = ex.Call.ErrorResponseBody;
+                var response = await ex.Call.Response.Content.ReadAsStringAsync();
                 var TaxJarEx = new TaxJarException("error", response) { Method = "DELETE", Resource = resource, HttpStatus = ex.Call.HttpStatus, HttpMessage = ex.Message };
                 throw TaxJarEx;
             }

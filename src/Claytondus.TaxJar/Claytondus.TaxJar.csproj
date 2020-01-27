@@ -2,16 +2,15 @@
 
   <PropertyGroup>
     <Description>A C# wrapper for the TaxJar SmartCalcs API.  I AM NOT AFFILIATED WITH TPS UNLIMITED, INC.</Description>
-    <Copyright>2017 Clayton Davis and TPS Unlimited, Inc.</Copyright>
+    <Copyright>2020 Clayton Davis and TPS Unlimited, Inc.</Copyright>
     <AssemblyTitle>Claytondus.TaxJar</AssemblyTitle>
-    <VersionPrefix>0.4.0</VersionPrefix>
+    <VersionPrefix>0.6.1</VersionPrefix>
     <Authors>Clayton Davis</Authors>
-    <TargetFrameworks>netstandard1.3;net45</TargetFrameworks>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Claytondus.TaxJar</AssemblyName>
     <PackageId>Claytondus.TaxJar</PackageId>
     <PackageProjectUrl>https://github.com/claytondus/Claytondus.TaxJar</PackageProjectUrl>
     <PackageLicenseUrl>http://opensource.org/licenses/MIT</PackageLicenseUrl>
-    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.3' ">$(PackageTargetFallback);dnxcore50;dotnet5.4</PackageTargetFallback>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
@@ -19,19 +18,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Flurl.Http" Version="2.2.0" />
-    <PackageReference Include="Microsoft.CSharp" Version="4.3.0" />
+    <PackageReference Include="Flurl.Http" Version="2.4.2" />
+    <PackageReference Include="LibLog" Version="5.0.8" />
   </ItemGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
-    <DefineConstants>$(DefineConstants);LIBLOG_PORTABLE</DefineConstants>
-  </PropertyGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
-    <Reference Include="System.Net" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
 
 </Project>

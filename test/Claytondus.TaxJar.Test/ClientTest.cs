@@ -6,11 +6,19 @@ using Xunit;
 using Claytondus.TaxJar;
 using Claytondus.TaxJar.Models;
 using Newtonsoft.Json;
+using Xunit.Abstractions;
 
 namespace Claytondus.TaxJar.Test
 {
     public class ClientTest
     {
+        private readonly ITestOutputHelper _testOutputHelper;
+
+        public ClientTest(ITestOutputHelper testOutputHelper)
+        {
+            _testOutputHelper = testOutputHelper;
+        }
+
         const string token = "";
 
         [Fact]
@@ -24,7 +32,7 @@ namespace Claytondus.TaxJar.Test
             };
             Console.WriteLine(JsonConvert.SerializeObject(range));
             var orders = await client.ListOrdersAsync(range);
-            Console.WriteLine(JsonConvert.SerializeObject(orders));
+            _testOutputHelper.WriteLine(JsonConvert.SerializeObject(orders));
             Assert.NotNull(orders);
         }
 
@@ -33,7 +41,7 @@ namespace Claytondus.TaxJar.Test
         {
             var client = new TaxJarClient(token);
             var rates = await client.GetSummaryRatesAsync();
-            Console.WriteLine(JsonConvert.SerializeObject(rates));
+            _testOutputHelper.WriteLine(JsonConvert.SerializeObject(rates));
             Assert.NotNull(rates);
         }
 
@@ -42,8 +50,25 @@ namespace Claytondus.TaxJar.Test
         {
             var client = new TaxJarClient(token);
             var rates = await client.ValidateVatNumberAsync("FR40303265045");
-            Console.WriteLine(JsonConvert.SerializeObject(rates));
+            _testOutputHelper.WriteLine(JsonConvert.SerializeObject(rates));
             Assert.NotNull(rates);
+        }
+
+        [Fact]
+        public async Task GetLocalRate()
+        {
+            var client = new TaxJarClient(token);
+            var rate = await client.GetUSCARateAsync(new TaxJarRateRequest
+            {
+                city = "New York",
+                country = "US",
+                state = "NY",
+                street = "350 5th Avenue",
+                zip = "10118"
+            });
+            Assert.NotNull(rate);
+            Assert.Equal(0.08875m, rate.rate.combined_rate);
+            Assert.True(rate.rate.freight_taxable);
         }
     }
 }
